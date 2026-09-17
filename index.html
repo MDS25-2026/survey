@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Sorting Work Emails by Urgency</title>
+<style>
+  :root { --ink:#1c1c1e; --muted:#6b6b70; --line:#dcdce0; --bg:#f7f7f8; --accent:#0b5cad; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 -apple-system,
+         BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:24px 16px 96px; }
+  header { border-top:5px solid var(--accent); background:#fff; border:1px solid var(--line);
+            border-radius:10px; padding:24px; margin-bottom:20px; }
+  h1 { margin:0 0 4px; font-size:26px; line-height:1.25; }
+  .byline { color:var(--muted); margin:0 0 14px; }
+  h2 { font-size:20px; margin:0 0 12px; }
+  section { background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px;
+             margin-bottom:20px; }
+  .q { border:0; border-top:1px solid var(--line); margin:20px 0 0; padding:18px 0 0; }
+  .q legend { font-weight:600; padding:0; display:block; width:100%; }
+  .num { display:inline-block; min-width:26px; color:var(--muted); font-weight:500; }
+  .hint { color:var(--muted); margin:4px 0 0 26px; font-size:14px; }
+  pre.email { white-space:pre-wrap; word-wrap:break-word; background:#fbfbfc;
+               border:1px solid var(--line); border-left:3px solid #c3c3c8; border-radius:6px;
+               padding:14px; margin:12px 0 14px 0; font:13px/1.55 ui-monospace,SFMono-Regular,
+               Menlo,Consolas,monospace; max-height:none; }
+  .opts { display:flex; flex-direction:column; gap:2px; }
+  label.opt { display:flex; align-items:flex-start; gap:10px; padding:8px 10px; border-radius:6px;
+               cursor:pointer; }
+  label.opt:hover { background:#f2f6fb; }
+  label.opt input { margin-top:5px; flex:0 0 auto; }
+  input[type=text] { width:100%; padding:10px 12px; border:1px solid var(--line);
+                      border-radius:6px; font:inherit; margin-top:8px; }
+  input[type=text]:focus { outline:2px solid var(--accent); outline-offset:1px; }
+  .draft h3 { margin:26px 0 6px; font-size:17px; }
+  .label { color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.04em;
+            margin:14px 0 0; }
+  .note { color:var(--muted); font-size:14px; border-left:3px solid var(--line); padding-left:12px; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:14px 26px;
+            font:600 16px/1 inherit; cursor:pointer; }
+  button:disabled { opacity:.55; cursor:default; }
+  #bar { position:fixed; left:0; top:0; height:3px; background:var(--accent); width:0;
+          transition:width .2s; z-index:9; }
+  #done, #fallback { display:none; }
+  #fallback textarea { width:100%; height:190px; font:12px/1.5 ui-monospace,monospace;
+                        margin-top:10px; }
+  @media (max-width:600px) { .wrap { padding:12px 10px 80px; } section, header { padding:16px; } }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="wrap">
+
+<header>
+  <h1>Sorting Work Emails by Urgency</h1>
+  <p class="byline">by MDS25, Monash University</p>
+  <p>We are a Final-Year Project group building an email assistant that sorts mail by how
+urgently it needs attention, and want to know how you would sort the same emails, so we can tell
+whether the system&#x27;s judgement is reasonable.</p>
+</header>
+
+<form id="study">
+
+<section>
+  <h2>Consent and context</h2>
+  <p><strong>What you need to do:</strong> Read 9 emails and sort each as high, medium
+or low urgency, then rate a few AI-written replies. About 20 minutes.</p>
+
+<p>These emails are from Enron, an American company based in Houston, Texas, written between
+roughly 1999 and 2001. At the time it was one of the largest companies in the United States with
+around 20,000 employees, and offices across America, Europe and Asia.</p>
+
+<p><strong>What the company did:</strong> Enron began as a natural gas pipeline business. By the
+time these emails were written it had become mainly an energy trading company, with physical assets
+like pipelines and power plants.</p>
+
+<p>The archive holds the mailboxes of roughly 150 employees, mostly traders and their managers in
+the Houston gas and power groups. So most of what you will read is one colleague writing to another
+about a deal, a report, a meeting, or an approval someone needs. A few are newsletters or automated
+notices from internal systems.</p>
+
+<p>The company collapsed at the end of 2001. A US regulator released these emails during the
+investigation that followed.</p>
+
+<p><strong>Read each one as the person who received it:</strong> an employee at that company, going
+through their own work inbox on a normal working day.</p>
+
+<p class="note">We do not collect your name, email address or any other identifying detail.
+Responses are numbered, not named. You can stop at any time. Summary figures go in our report; raw
+responses do not, and they are deleted once it is submitted.</p>
+  <fieldset class="q">
+    <legend><span class="num">1</span>Do you consent to take part on this basis?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="consent" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="consent" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">2</span>How much experience do you have managing a work or professional email inbox?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="role" value="Little or none" required><span>Little or none</span></label>
+      <label class="opt"><input type="radio" name="role" value="Some: an internship, part-time or casual work" required><span>Some: an internship, part-time or casual work</span></label>
+      <label class="opt"><input type="radio" name="role" value="Regular: it is part of my current work" required><span>Regular: it is part of my current work</span></label>
+      <label class="opt"><input type="radio" name="role" value="Heavy: I deal with a large volume of work email daily" required><span>Heavy: I deal with a large volume of work email daily</span></label>
+    </div>
+  </fieldset>
+</section>
+
+<section>
+  <h2>Part 1: Sorting emails by urgency</h2>
+  <p>You will read 9 emails. For each one, decide how urgently it needs the
+recipient's attention.</p>
+
+<p><strong>Use your own judgement.</strong> Sort them the way you would your own inbox.</p>
+
+<p>These are real emails pulled from an archive exactly as they were stored. Some show who sent
+them and a subject line; some are just the message. Some are forwards with the older thread
+underneath. Judge each on what is actually in front of you; if you cannot tell who sent it, that is
+part of the situation.</p>
+
+<p>You may choose "Other" if you have the time to explain any particular reasoning.</p>
+  <fieldset class="q">
+    <legend><span class="num">3</span>Email 1 of 9</legend>
+    <pre class="email">Re: MAI Appraisal
+
+I would like to have a copy of the appraisal. See you Monday at 2.
+
+Phillip</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_1" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_1" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_1" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_1" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_1" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">4</span>Email 2 of 9</legend>
+    <pre class="email">FT-Denver book on EOL
+
+---------------------- Forwarded by Phillip K Allen/HOU/ECT on 06/23/2000 11:45 AM ---------------------------
+
+Enron North America Corp.
+
+From: Michael Walters 06/21/2000 04:17 PM
+
+To: Phillip K Allen/HOU/ECT@ECT, Paul T Lucci/DEN/ECT@Enron
+
+cc: Tara Sweitzer/HOU/ECT@ECT
+
+Subject: FT-Denver book on EOL
+
+Phil or Paul:
+
+Please forward this note to Torrey Moorer or Tara Sweitzer in the EOL department. It must be sent by you.
+
+Per this request, we are asking that all financial deals on EOL be bridged over to the FT-Denver book instead of the physical ENA IM-Denver book.
+
+Thanks in advance.
+
+Mick Walters
+
+3-4783
+
+EB3299d</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_2" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_2" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_2" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_2" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_2" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">5</span>Email 3 of 9</legend>
+    <pre class="email">Trader Performance Report
+
+John:
+
+Attached please find the September MTD, YTD Trader Performance Report for your desk. The ranking was against the whole north America natural gas trader pool.
+
+If you have any questions, please call Frank Hayden or me.
+
+Thanks,</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_3" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_3" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_3" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_3" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_3" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">6</span>Email 4 of 9</legend>
+    <pre class="email">Happy Birthday
+
+Happy B-day punk!
+
+How old are you now? 30? Oh well, I guess we will see ya tonight.
+
+I don&#x27;t think you are at work today but if you are shoot me a line.
+
+-Eric</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_4" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_4" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_4" value="Low" required><span>Low</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">7</span>In 1 or 2 sentences, what was the reasoning for your decision in the previous question?</legend>
+    <input type="text" name="explain_4" placeholder="Your answer" required>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">8</span>Email 5 of 9</legend>
+    <pre class="email">Don, claim your gift!
+
+[IMAGE][IMAGE]
+
+Dear Don, Click here now to redeem your Rose Blossom Bud Vase by Lenox! [IMAGE] [IMAGE] [IMAGE] [IMAGE]
+
+Shipping and handling charges apply. Forgot your member name? It is: Baughman Forgot your iWon password? Click here. You received this email because when you registered at iWon you agreed to receive email from us. To unsubscribe from one or more email categories, please click below. Please note, changes may take up to one week to process. If you&#x27;re not signed in, you will need to do so before you can update your profile. Click here.</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_5" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_5" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_5" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_5" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_5" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">9</span>Email 6 of 9</legend>
+    <pre class="email">ECT Europe - Organisational Announcement
+
+Sally,
+
+The draft for your review and comments, as promised. The sooner I can get this out, the sooner the trading floor gossip will stop. (no such thing as a secret in Enron is there?).
+
+Many thanks
+
+Fernley
+
+In view of the continued integration of a number of Enron global functions, I am pleased to announce that the European Trading Support functions will, with immediate effect, be consolidated into one operational unit. This unit, to be headed by Barry Pearce (VP of Trading Support Operations) and based in London, will include the European Gas, European Power and the Global Liquids groups.
+
+This newly created unit will work within the remit of Global Risk Management Operations and will adopt the following core responsibilities in Europe.
+
+1. Enhance communication and integration among all trading support operations professionals.
+
+2. Assure the proliferation of best operational practices.
+
+3. Facilitate the allocation of human and systems resources.
+
+4. Provide key training for all trading support operations personnel.
+
+5. Co-ordinate user requirements for shared operational systems.
+
+6. Work with ECT NA to oversee the creation of a global internal control audit plan for trading support activities.
+
+7. Establish procedures for opening trading support operations offices and create key benchmarks for measuring on-going trading risk controls.
+
+In this role, Barry and his team will ensure that all Enron operations in Europe meet the extremely high standards of trading support we expect throughout our organisation. Barry will report directly to myself and also to Sally Beck in her capacity as head of Global Risk Management Operations.
+
+Barry has been involved in the European Energy Operations function since 1993 and manages risk management administration, risk consolidation and reporting,
+
+contract administration, contract settlements, cash management and trading accounting for ECT Europe&#x27;s physical commodity trading, energy derivatives trading and financial products trading. He has been with Enron since 1992,
+
+when he joined the company from Arthur Andersen.
+
+Please join me in congratulating Barry in his new role and supporting him and his team in this exciting challenge they have ahead.</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_6" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_6" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_6" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_6" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_6" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">10</span>Email 7 of 9</legend>
+    <pre class="email">FW: CMS Opportunity
+
+FYI - Lets talk about this today.
+
+-----Original Message-----
+
+From: gregory.felton@cgiusa.com@ENRON
+
+[mailto:IMCEANOTES-gregory+2Efelton+40cgiusa+2Ecom+40ENRON@ENRON.com]
+
+Sent: Monday, March 26, 2001 10:30 AM
+
+To: Jafry, Rahil
+
+Subject: CMS Opportunity
+
+Jafry,
+
+Here is the actual presentation requirements as per the RFP. We can deviate from the form, but must address their stated requirements. I think we should structure the Enron portion as follows:
+
+I. ENW Overview
+
+II. Products and Services
+
+III. Engagement Approach
+
+Let me know what you think. We need to pull this together today.
+
+I&#x27;ve also attached the material Steve sent me previously.
+
+Thanks,
+
+Greg
+
+Office: (713) 868-5537 x1148
+
+Mobile: (281) 787-9760
+
+eMail: gregory.felton@cgiusa.com
+
+- CMS Panhandle Pipe Line - RFP1.doc</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_7" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_7" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_7" value="Low" required><span>Low</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">11</span>In 1 or 2 sentences, what was the reasoning for your decision in the previous question?</legend>
+    <input type="text" name="explain_7" placeholder="Your answer" required>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">12</span>Email 8 of 9</legend>
+    <pre class="email">Action Requested: Invoice Requires Coding/Issue Resolution/Approval 01790100050371 Ava, have you taken care of this? Thanks. Lynn ---------------------- Forwarded by Lynn Blair/ET&amp;S/Enron on 06/17/2001 05:31 PM ---------------------------
+
+&lt;iBuyit.Payables@Enron.com&gt; on 06/12/2001 02:50:05 PM
+
+To: &lt;gblair@enron.com&gt;
+
+cc:
+
+Subject: Action Requested: Invoice Requires Coding/Issue Resolution/Approval 01790100050371
+
+Please do not reply to this e-mail.
+
+You are receiving this message because an invoice requiring coding, issue resolution, or approval has been submitted to your iBuyit Payables in-box. This requires your action through iBuyit Payables.
+
+To launch iBuyit Payables, click on the link below:
+
+http://iBuyitPayables.enron.com
+
+Note: Log into iBuyitPayables using the same Employee PID (P-Number) and Password you use to enter the eHRonline system and/or SAP.
+
+First time iBuyit Payables user? For training materials, click on the link below:
+
+http://sap.enron.com/sap_doclib/user/file_list.asp?cabinet_id=265
+
+Need help?
+
+Please contact the ISC Call Center at (713) 345-4727.</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_8" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_8" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_8" value="Low" required><span>Low</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">13</span>In 1 or 2 sentences, what was the reasoning for your decision in the previous question?</legend>
+    <input type="text" name="explain_8" placeholder="Your answer" required>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">14</span>Email 9 of 9</legend>
+    <pre class="email">Thoughts on Presentation
+
+---------------------- Forwarded by Phillip K Allen/HOU/ECT on 06/12/2000 10:55 AM ---------------------------
+
+From: Tim Belden 06/11/2000 07:26 PM
+
+To: Phillip K Allen/HOU/ECT@ECT
+
+cc:
+
+Subject: Thoughts on Presentation
+
+It is a shame that the CAISO doesn&#x27;t provide actual generation by unit. The WSCC data, which is dicey and we don&#x27;t have until July 1999, and the CEMMS,
+
+which comes on a delay, are ultimately our best sources. For your purposes the CAISO may suffice. I think that you probably know this already, but there can be a siginificant difference between &quot;scheduled&quot; and &quot;actual&quot; generation. You are pulling &quot;scheduled.&quot; If someone doesn&#x27;t schedule their generation and then generates, either instructed or uninstructed, then you will miss that. You may also miss generation of the northern california munis such as smud who only schedule their net load to the caiso. That is,
+
+if they have 1500 MW of load and 1200 MW of generation, they may simply schedule 300 MW of load and sc transfers or imports of 300 MW. Having said all of that, it is probably close enough and better than your alternatives on the generation side.
+
+On the load side I think that I would simply use CAISO actual load. While they don&#x27;t split out NP15 from SP15, I think that using the actual number is better than the &quot;scheduled&quot; number. The utilities play lots of game on the load side, usually under-scheduling depending on price.
+
+I think the presentation looks good. It would be useful to share this with others up here once you have it finished. I&#x27;d like to see how much gas demand goes up with each additional GW of gas-generated electricity,
+
+especially compared to all gas consumption. I was surprised by how small the UEG consumption was compared to other uses. If it is the largest marginal consumer then it is obviously a different story.
+
+Let&#x27;s talk.</pre>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="item_9" value="High" required><span>High</span></label>
+      <label class="opt"><input type="radio" name="item_9" value="Medium" required><span>Medium</span></label>
+      <label class="opt"><input type="radio" name="item_9" value="Low" required><span>Low</span></label>
+      <label class="opt"><input type="radio" name="item_9" value="Other" required><span>Other</span></label>
+    </div>
+    <input type="text" class="other" name="other_9" placeholder="If Other, please say how you would describe it">
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">15</span>Did any of the emails not fit into high, medium or low? If yes, which one, and what was missing?</legend>
+    <input type="text" name="q1_not_fitting" placeholder="Your answer" required>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">16</span>Imagine you could mark certain senders as important, so mail from them was always treated as urgent. Would that have changed how you sorted any of the emails above? If yes, which ones, and why?</legend>
+    <input type="text" name="q2_sender_list" placeholder="Your answer" required>
+  </fieldset>
+</section>
+
+<section>
+  <h2>Part 2: Rating AI-written replies</h2>
+<p>Here are replies our system drafted automatically. The email it was replying to
+is shown first, then the draft.</p>
+
+<p>For each one you will answer four quick checks and then an overall verdict. The four checks are
+the same ones our system runs on itself &mdash; we want to know where your judgement and its
+judgement differ, not just whether they agree overall.</p>
+
+<p>Personal details were removed before the AI ever saw these emails, so you may see placeholders
+like <code>[EMAIL_REDACTED]</code>.</p>
+  <div class="draft">
+    <h3>Reply 1 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;email=no&quot;/&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;date=no&quot;/&gt;&lt;style nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;&gt;.awl a {color: #FFFFFF; text-decoration: none;} .abml a {color: #000000; font-family: &#x27;Google Sans Flex&#x27;,&#x27;Google Sans Text&#x27;,&#x27;Google Sans&#x27;,&#x27;Noto Sans&#x27;,Arial,[Redacted],sans-serif; font-weight: bold; text-decoration: none;} .adgl a {color: rgba(0, 0, 0, 0.87); text-decoration: none;} .afal a {color: #b0b0b0; text-decoration: none;} @media screen and (min-width: 600px) {.v2sp {padding: 6px 30px 0px;} .v2rsp {padding: 0px 10px;}} @media screen and (min-width: 600px) {.mdv2rw {padding: 40px 40px;}} &lt;/style&gt;&lt;link href=&quot;//fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap&quot; rel=&quot;stylesheet&quot; nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;/&gt;&lt;/head&gt;&lt;body style=&quot;margin: 0; padding: 0;&quot; bgcolor=&quot;#FFFFFF&quot;&gt;&lt;table width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;min-width: 348px;&quot; border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; lang=&quot;en&quot;&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr align=&quot;center&quot;&gt;&lt;td&gt;&lt;div itemscope itemtype=&quot;//schema.org/EmailMessage&quot;&gt;&lt;div itemprop=&quot;action&quot; itemscope itemtype=&quot;//schema.org/ViewAction&quot;&gt;&lt;link itemprop=&quot;url&quot; href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot;/&gt;&lt;meta itemprop=&quot;name&quot; content=&quot;Review Activity&quot;/&gt;&lt;/div&gt;&lt;/div&gt;&lt;table border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; style=&quot;padding-bottom: 20px; max-width: 516px; min-width: 220px;&quot;&gt;&lt;tr&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;div style=&quot;border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 40px 20px;&quot; align=&quot;center&quot; class=&quot;mdv2rw&quot;&gt;&lt;img src=&quot;https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png&quot; width=&quot;74&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; style=&quot;margin-bottom: 16px;&quot; alt=&quot;Google&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;&quot;&gt;&lt;div style=&quot;font-size: 24px;&quot;&gt;You allowed AIMail access to some of your Google Account data &lt;/div&gt;&lt;table align=&quot;center&quot; style=&quot;margin-top:8px;&quot;&gt;&lt;tr style=&quot;line-height: normal;&quot;&gt;&lt;td align=&quot;right&quot; style=&quot;padding-right:8px;&quot;&gt;&lt;img [Redacted]&quot; height=&quot;20&quot; style=&quot;width: 20px; height: 20px; vertical-align: sub; border-radius: 50%;;&quot; src=&quot;https://lh3.googleusercontent.com/a/ACg8ocJzuzsuJs5PS8XzfTNuGZTxsvRW4DjWbD0HRpZ_uvXS_A5huQ=s96-c&quot; alt=&quot;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.87); font-size: 14px; line-height: 20px;&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; &lt;/div&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; font-weight: 400; font-size: 14px; color: #1f1f1f; line-height: 20px;padding-top: 20px; text-align: left;&quot;&gt;&lt;br&gt;&lt;p&gt;If you didn&#x27;t allow AIMail access to some of your Google Account data, someone else may be trying to access your Google Account data.&lt;/p&gt;&lt;p&gt;Take a moment now to check your account activity and secure your account.&lt;/p&gt;&lt;div style=&quot;padding-top: 32px; text-align: center;&quot;&gt;&lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot; target=&quot;_blank&quot; link-id=&quot;main-button-link&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; line-height: 16px; color: #ffffff; font-weight: 500; text-decoration: none; font-size: 14px;display:inline-block;padding: 12px 24px;background-color: #0b57d0; border-radius: 9999px; min-width: 64px;&quot;&gt;Check activity&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 40px;&quot;&gt;&lt;div style=&quot;border-bottom: thin solid #dadce0; padding-bottom: 24px;&quot;&gt;To make changes at any time to the access that AIMail has to your data, go to your &lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/connections/overview/AY6rrVEI5i54aAESWOWt0X1xVDNlMZrnk2sILYUIE06vTJRpGs37lrkriN0KiNinL0JXaEkQBEQ6BVj6gBC0rBEurs0?utm_source%3Dsec_alert%26utm_medium%3Demail_notification%26force_all%3Dtrue&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;Google Account&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 20px; font-size: 12px; line-height: 16px; color: #5f6368; letter-spacing: 0.3px; text-align: center&quot;&gt;You can also see security activity at&lt;br&gt;&lt;a href=&quot;https://myaccount.google.com/notifications&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;https://myaccount.google.com/notifications&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;&lt;div&gt;You received this email to let you know about important changes to your Google Account and services.&lt;/div&gt;&lt;div style=&quot;direction: ltr;&quot;&gt;&amp;copy; 2026 Google LLC, &lt;a class=&quot;afal&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;1600 [Redacted], CA 94043, USA&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: Re: Security Alert: AIMail access to Google Account
+
+Hi Team,
+
+I have received a security notification regarding third-party AI tool access (&quot;AIMail&quot;) to my Google Account. In accordance with our company data classification policies and the Code of Conduct (prohibiting unauthorized third-party platform and AI tool integration with company or account data), I am reviewing the account activity to secure the connection and ensure compliance.
+
+I will keep you updated if any further action or reporting is required.
+
+Best regards,
+
+[Your Name]
+
+[Your Title]</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">17</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_1" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_1" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_1" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">18</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_1" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_1" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_1" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">19</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_1" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_1" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_1" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_1" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">20</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_1" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_1" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_1" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">21</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_1" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_1" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_1" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">22</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_1" placeholder="Optional">
+  </fieldset>
+  <div class="draft">
+    <h3>Reply 2 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">Hi,
+
+We&#x27;re onboarding a new supplier for the [Redacted] hardware refresh and need your sign-off before Friday.
+
+The account manager is [Redacted], reachable on [PHONE_REDACTED] or at [EMAIL_REDACTED]. Her IC is [IC_REDACTED] for the vendor registration form.
+
+Payment terms are 30 days from invoice. Their Public Bank account ending [Redacted] is on the setup form. First order is PO 88451203 for 45 monitors at 2,340.00 each, delivery scheduled 12 October.
+
+Let me know if you need anything else before I submit it.
+
+Thanks,
+
+[Redacted] Lead</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: RE: Supplier Onboarding &amp; PO Sign-off for Hardware Refresh
+
+Hi [Redacted],
+
+Thank you for providing the details for the new supplier onboarding and the hardware refresh order (PO 88451203).
+
+Before I can provide sign-off, could you please confirm if pre-approval was obtained from the Department Head for this purchase? As per our Employee Handbook, any expense claim or purchase over $500 requires prior approval to ensure proper compliance and reimbursement eligibility.
+
+Once that&#x27;s confirmed, I&#x27;ll be happy to review and complete the sign-off ahead of Friday&#x27;s deadline.
+
+Best regards,
+
+[Your Name]
+
+[Your Title]</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">23</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_2" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_2" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_2" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">24</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_2" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_2" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_2" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">25</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_2" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_2" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_2" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_2" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">26</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_2" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_2" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_2" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">27</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_2" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_2" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_2" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">28</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_2" placeholder="Optional">
+  </fieldset>
+  <div class="draft">
+    <h3>Reply 3 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">&lt;div dir=&quot;auto&quot;&gt;Hi Mark,&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Thanks for the update on the most recent project. I&amp;#39;ll review the slides shortly. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Regarding the cost numbers, I&amp;#39;m still waiting on [Redacted] to send them over but I will make sure to get then to you as soon as I can. Also would it be possible to meet on Thursday instead of Friday at around 3:00 PM? Let me know if that works for you. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Looking forward to it. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Best regards,&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Natasha&lt;/div&gt;&lt;/div&gt;</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: Re: Project Update &amp; Meeting Time
+
+Hi Natasha,
+
+Thanks for the update. The slides look great, and take your time with the cost numbers.
+
+Thursday at 3:00 PM works for me for our meeting. I&#x27;ll send over a calendar invite shortly.
+
+Best regards,
+
+Mark</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">29</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_3" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_3" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_3" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">30</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_3" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_3" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_3" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">31</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_3" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_3" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_3" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_3" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">32</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_3" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_3" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_3" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">33</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_3" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_3" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_3" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">34</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_3" placeholder="Optional">
+  </fieldset>
+  <div class="draft">
+    <h3>Reply 4 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-rQesXe gmail-MPyX&quot; style=&quot;font-weight:700;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Subject:&lt;/span&gt; URGENT: Q3 Project Sync &amp;amp; Budget Approval Needed by Friday&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Hi there,&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I hope you are having a good week.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I need you to do a few things for us as soon as you can:&lt;/div&gt;&lt;/div&gt;&lt;ol class=&quot;gmail-IaGLZe gmail-VimKh&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Reschedule our team sync currently set for tomorrow at 2:00 PM to next Tuesday at 10:00 AM.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Review the attached (fictional) budget file and tell me if the total exceeds $15,000.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Draft a short, polite reply to Sarah letting her know we got her message about the design updates.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;/ol&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Let me know if you need anything else from me to get started.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Best,&lt;br style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Alex&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: Re: URGENT: Q3 Project Sync &amp; Budget Approval Needed by Friday
+
+Hi Alex,
+
+Thanks for reaching out. Here are the updates regarding your requests:
+
+1. **Meeting Rescheduled:** The team sync has been moved from tomorrow at 2:00 PM to next Tuesday at 10:00 AM.
+
+2. **Budget Review:** I have reviewed the attached budget file. (Please note: any individual expense claims over $500 will require pre-approval from the department head before purchase).
+
+3. **Message to Sarah:** I have drafted a polite reply to Sarah acknowledging receipt of her message regarding the design updates.
+
+Please let me know if you need anything else to get started.
+
+Best regards,
+
+[Your Name]</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">35</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_4" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_4" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_4" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">36</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_4" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_4" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_4" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">37</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_4" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_4" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_4" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_4" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">38</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_4" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_4" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_4" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">39</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_4" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_4" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_4" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">40</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_4" placeholder="Optional">
+  </fieldset>
+  <div class="draft">
+    <h3>Reply 5 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is [Redacted] and I am writing from [Redacted], [Redacted] regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: [PHONE_REDACTED] / [PHONE_REDACTED] / [PHONE_REDACTED]&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc [Redacted] (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;[Redacted]&lt;br&gt;[Redacted] Lumpur&lt;/div&gt;</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: Re: Urgent Transfer Issue and Record Update - Sunway Logistics Sdn Bhd
+
+Dear Support Team,
+
+Thank you for reaching out regarding the urgent transfer issue and the update of records for Sunway Logistics Sdn Bhd.
+
+We have received your verified details, including your identification, contact information, and bank account reference. Please be assured that we have noted your clarification regarding order tracking ID 998877665544.
+
+We are currently reviewing your request in accordance with our standard verification and security procedures. Should we require any further information or documentation to process this update, we will contact you promptly.
+
+Thank you for your patience and cooperation.
+
+Best regards,
+
+Email Assistant
+
+Support Team</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">41</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_5" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_5" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_5" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">42</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_5" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_5" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_5" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">43</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_5" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_5" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_5" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_5" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">44</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_5" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_5" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_5" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">45</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_5" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_5" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_5" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">46</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_5" placeholder="Optional">
+  </fieldset>
+  <div class="draft">
+    <h3>Reply 6 of 6</h3>
+    <p class="label">The email that was received</p>
+    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is Muhammad Danial and I am writing from Petaling Jaya, Selangor regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: &lt;a href=&quot;tel:+60%2012-345%206789&quot; value=&quot;[PHONE_REDACTED]&quot; target=&quot;_blank&quot;&gt;[PHONE_REDACTED]&lt;/a&gt; / [PHONE_REDACTED] /&lt;a href=&quot;tel:(713)%20853-6161&quot; value=&quot;+17138536161&quot; target=&quot;_blank&quot;&gt; [PHONE_REDACTED]&lt;/a&gt;&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot; target=&quot;_blank&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc 514012345678 (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;Muhammad Danial&lt;br&gt;Kuala Lumpur&lt;/div&gt;</pre>
+    <p class="label">The draft reply</p>
+    <pre class="email">Subject: Re: Update Request for Sunway Logistics Sdn Bhd Records / Maybank Transfer Issue
+
+Dear Muhammad Danial,
+
+Thank you for reaching out to us.
+
+Please note that you have reached the HLIB (Hong Leong Investment Bank) support team. As this inquiry pertains to a Maybank transfer issue and updating external banking records for Sunway Logistics Sdn Bhd, we are unable to process this request. Please contact Maybank Customer Service directly for assistance with your bank account and transfer.
+
+Regarding your query on the tracking ID and organization records, please clarify whether this pertains to an HLIB-related matter so we can direct your request appropriately.
+
+If you have any questions concerning HLIB policies or our Code of Conduct and Ethics, please feel free to let us know.
+
+Best regards,
+
+Support Team
+
+HLIB</pre>
+  </div>
+  <fieldset class="q">
+    <legend><span class="num">47</span>Does the reply state anything that is not in the email above?</legend>
+    <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g1_6" value="No, everything in it traces back to the email" required><span>No, everything in it traces back to the email</span></label>
+      <label class="opt"><input type="radio" name="g1_6" value="Yes, it invents something" required><span>Yes, it invents something</span></label>
+      <label class="opt"><input type="radio" name="g1_6" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">48</span>Does the reply give away any personal details it should not?</legend>
+    <p class="hint">A phone number, email address, ID number, or someone else&#x27;s name.</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g2_6" value="No" required><span>No</span></label>
+      <label class="opt"><input type="radio" name="g2_6" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g2_6" value="Not sure" required><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">49</span>Is the tone right for a work reply?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g3_6" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="g3_6" value="Too formal" required><span>Too formal</span></label>
+      <label class="opt"><input type="radio" name="g3_6" value="Too casual" required><span>Too casual</span></label>
+      <label class="opt"><input type="radio" name="g3_6" value="Something else is off" required><span>Something else is off</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">50</span>Does the reply answer everything the email asked?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="g4_6" value="Yes, all of it" required><span>Yes, all of it</span></label>
+      <label class="opt"><input type="radio" name="g4_6" value="It misses part of it" required><span>It misses part of it</span></label>
+      <label class="opt"><input type="radio" name="g4_6" value="It misses most of it" required><span>It misses most of it</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">51</span>Overall: would you send this as written?</legend>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="send_6" value="Yes" required><span>Yes</span></label>
+      <label class="opt"><input type="radio" name="send_6" value="Only after editing" required><span>Only after editing</span></label>
+      <label class="opt"><input type="radio" name="send_6" value="No" required><span>No</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="q">
+    <legend><span class="num">52</span>If not as written, what would you change?</legend>
+    <input type="text" name="comment_6" placeholder="Optional">
+  </fieldset>
+</section>
+
+<section>
+  <p id="status" class="note" role="status"></p>
+  <button type="submit" id="send">Submit my answers</button>
+</section>
+
+</form>
+
+<section id="done">
+  <h2>Thank you</h2>
+  <p>Your answers have been recorded. You can close this page.</p>
+</section>
+
+<section id="fallback">
+  <h2>Could not submit</h2>
+  <p>Something went wrong saving your answers. Nothing is lost &mdash; copy the text below and send
+     it to whoever gave you this link.</p>
+  <textarea id="dump" readonly></textarea>
+</section>
+
+</div>
+<script src="config.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('study');
+  var bar = document.getElementById('bar');
+  var status = document.getElementById('status');
+  var button = document.getElementById('send');
+
+  function required() {
+    return Array.prototype.slice.call(form.querySelectorAll('[required]'));
+  }
+  function answered() {
+    var names = {};
+    required().forEach(function (el) {
+      if (el.type === 'radio') {
+        if (form.querySelector('input[name="' + el.name + '"]:checked')) names[el.name] = 1;
+      } else if (el.value.trim()) { names[el.name] = 1; }
+    });
+    return Object.keys(names).length;
+  }
+  function total() {
+    var names = {};
+    required().forEach(function (el) { names[el.name] = 1; });
+    return Object.keys(names).length;
+  }
+  function progress() { bar.style.width = (answered() / total() * 100) + '%'; }
+  form.addEventListener('input', progress);
+  form.addEventListener('change', progress);
+
+  function collect() {
+    var out = { submitted_at: new Date().toISOString() };
+    new FormData(form).forEach(function (value, key) { out[key] = value; });
+    return out;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var payload = collect();
+    button.disabled = true;
+    status.textContent = 'Sending...';
+
+    if (!window.STUDY_CONFIG || !window.STUDY_CONFIG.url) {
+      show_fallback(payload, 'This form has not been connected to a database yet.');
+      return;
+    }
+
+    fetch(window.STUDY_CONFIG.url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': window.STUDY_CONFIG.key,
+        'Authorization': 'Bearer ' + window.STUDY_CONFIG.key,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ answers: payload })
+    }).then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      form.style.display = 'none';
+      document.getElementById('done').style.display = 'block';
+      window.scrollTo(0, 0);
+    }).catch(function (error) {
+      show_fallback(payload, String(error));
+    });
+  });
+
+  function show_fallback(payload, reason) {
+    button.disabled = false;
+    status.textContent = '';
+    document.getElementById('dump').value = JSON.stringify(payload, null, 2);
+    document.getElementById('fallback').style.display = 'block';
+    document.getElementById('fallback').scrollIntoView();
+    if (window.console) console.error('study submit failed:', reason);
+  }
+})();
+</script>
+</body>
+</html>
