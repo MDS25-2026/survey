@@ -34,7 +34,12 @@
   input[type=text] { width:100%; padding:10px 12px; border:1px solid var(--line);
                       border-radius:6px; font:inherit; margin-top:8px; }
   input[type=text]:focus { outline:2px solid var(--accent); outline-offset:1px; }
-  .draft h3 { margin:26px 0 6px; font-size:17px; }
+  .block { border:1px solid var(--line); border-radius:10px; padding:20px; margin:22px 0;
+             background:#fcfcfd; }
+  .block .q:first-of-type { border-top:1px solid var(--line); margin-top:18px; }
+  .blockhead { margin:0 0 4px; font-size:17px; color:var(--accent); }
+  pre.received { border-left-color:#c3c3c8; }
+  pre.reply { border-left-color:var(--accent); background:#f4f8fd; }
   .label { color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.04em;
             margin:14px 0 0; }
   .note { color:var(--muted); font-size:14px; border-left:3px solid var(--line); padding-left:12px; }
@@ -425,12 +430,12 @@ judgement differ, not just whether they agree overall.</p>
 
 <p>Personal details were removed before the AI ever saw these emails, so you may see placeholders
 like <code>[EMAIL_REDACTED]</code>.</p>
-  <div class="draft">
-    <h3>Reply 1 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;email=no&quot;/&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;date=no&quot;/&gt;&lt;style nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;&gt;.awl a {color: #FFFFFF; text-decoration: none;} .abml a {color: #000000; font-family: &#x27;Google Sans Flex&#x27;,&#x27;Google Sans Text&#x27;,&#x27;Google Sans&#x27;,&#x27;Noto Sans&#x27;,Arial,[Redacted],sans-serif; font-weight: bold; text-decoration: none;} .adgl a {color: rgba(0, 0, 0, 0.87); text-decoration: none;} .afal a {color: #b0b0b0; text-decoration: none;} @media screen and (min-width: 600px) {.v2sp {padding: 6px 30px 0px;} .v2rsp {padding: 0px 10px;}} @media screen and (min-width: 600px) {.mdv2rw {padding: 40px 40px;}} &lt;/style&gt;&lt;link href=&quot;//fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap&quot; rel=&quot;stylesheet&quot; nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;/&gt;&lt;/head&gt;&lt;body style=&quot;margin: 0; padding: 0;&quot; bgcolor=&quot;#FFFFFF&quot;&gt;&lt;table width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;min-width: 348px;&quot; border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; lang=&quot;en&quot;&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr align=&quot;center&quot;&gt;&lt;td&gt;&lt;div itemscope itemtype=&quot;//schema.org/EmailMessage&quot;&gt;&lt;div itemprop=&quot;action&quot; itemscope itemtype=&quot;//schema.org/ViewAction&quot;&gt;&lt;link itemprop=&quot;url&quot; href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot;/&gt;&lt;meta itemprop=&quot;name&quot; content=&quot;Review Activity&quot;/&gt;&lt;/div&gt;&lt;/div&gt;&lt;table border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; style=&quot;padding-bottom: 20px; max-width: 516px; min-width: 220px;&quot;&gt;&lt;tr&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;div style=&quot;border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 40px 20px;&quot; align=&quot;center&quot; class=&quot;mdv2rw&quot;&gt;&lt;img src=&quot;https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png&quot; width=&quot;74&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; style=&quot;margin-bottom: 16px;&quot; alt=&quot;Google&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;&quot;&gt;&lt;div style=&quot;font-size: 24px;&quot;&gt;You allowed AIMail access to some of your Google Account data &lt;/div&gt;&lt;table align=&quot;center&quot; style=&quot;margin-top:8px;&quot;&gt;&lt;tr style=&quot;line-height: normal;&quot;&gt;&lt;td align=&quot;right&quot; style=&quot;padding-right:8px;&quot;&gt;&lt;img [Redacted]&quot; height=&quot;20&quot; style=&quot;width: 20px; height: 20px; vertical-align: sub; border-radius: 50%;;&quot; src=&quot;https://lh3.googleusercontent.com/a/ACg8ocJzuzsuJs5PS8XzfTNuGZTxsvRW4DjWbD0HRpZ_uvXS_A5huQ=s96-c&quot; alt=&quot;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.87); font-size: 14px; line-height: 20px;&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; &lt;/div&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; font-weight: 400; font-size: 14px; color: #1f1f1f; line-height: 20px;padding-top: 20px; text-align: left;&quot;&gt;&lt;br&gt;&lt;p&gt;If you didn&#x27;t allow AIMail access to some of your Google Account data, someone else may be trying to access your Google Account data.&lt;/p&gt;&lt;p&gt;Take a moment now to check your account activity and secure your account.&lt;/p&gt;&lt;div style=&quot;padding-top: 32px; text-align: center;&quot;&gt;&lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot; target=&quot;_blank&quot; link-id=&quot;main-button-link&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; line-height: 16px; color: #ffffff; font-weight: 500; text-decoration: none; font-size: 14px;display:inline-block;padding: 12px 24px;background-color: #0b57d0; border-radius: 9999px; min-width: 64px;&quot;&gt;Check activity&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 40px;&quot;&gt;&lt;div style=&quot;border-bottom: thin solid #dadce0; padding-bottom: 24px;&quot;&gt;To make changes at any time to the access that AIMail has to your data, go to your &lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/connections/overview/AY6rrVEI5i54aAESWOWt0X1xVDNlMZrnk2sILYUIE06vTJRpGs37lrkriN0KiNinL0JXaEkQBEQ6BVj6gBC0rBEurs0?utm_source%3Dsec_alert%26utm_medium%3Demail_notification%26force_all%3Dtrue&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;Google Account&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 20px; font-size: 12px; line-height: 16px; color: #5f6368; letter-spacing: 0.3px; text-align: center&quot;&gt;You can also see security activity at&lt;br&gt;&lt;a href=&quot;https://myaccount.google.com/notifications&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;https://myaccount.google.com/notifications&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;&lt;div&gt;You received this email to let you know about important changes to your Google Account and services.&lt;/div&gt;&lt;div style=&quot;direction: ltr;&quot;&gt;&amp;copy; 2026 Google LLC, &lt;a class=&quot;afal&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;1600 [Redacted], CA 94043, USA&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: Re: Security Alert: AIMail access to Google Account
+<div class="block">
+  <h3 class="blockhead">Reply 1 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;email=no&quot;/&gt;&lt;meta name=&quot;format-detection&quot; content=&quot;date=no&quot;/&gt;&lt;style nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;&gt;.awl a {color: #FFFFFF; text-decoration: none;} .abml a {color: #000000; font-family: &#x27;Google Sans Flex&#x27;,&#x27;Google Sans Text&#x27;,&#x27;Google Sans&#x27;,&#x27;Noto Sans&#x27;,Arial,[Redacted],sans-serif; font-weight: bold; text-decoration: none;} .adgl a {color: rgba(0, 0, 0, 0.87); text-decoration: none;} .afal a {color: #b0b0b0; text-decoration: none;} @media screen and (min-width: 600px) {.v2sp {padding: 6px 30px 0px;} .v2rsp {padding: 0px 10px;}} @media screen and (min-width: 600px) {.mdv2rw {padding: 40px 40px;}} &lt;/style&gt;&lt;link href=&quot;//fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap&quot; rel=&quot;stylesheet&quot; nonce=&quot;UhSOR1DoKVwDF6iEsbp0lg&quot;/&gt;&lt;/head&gt;&lt;body style=&quot;margin: 0; padding: 0;&quot; bgcolor=&quot;#FFFFFF&quot;&gt;&lt;table width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;min-width: 348px;&quot; border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; lang=&quot;en&quot;&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr align=&quot;center&quot;&gt;&lt;td&gt;&lt;div itemscope itemtype=&quot;//schema.org/EmailMessage&quot;&gt;&lt;div itemprop=&quot;action&quot; itemscope itemtype=&quot;//schema.org/ViewAction&quot;&gt;&lt;link itemprop=&quot;url&quot; href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot;/&gt;&lt;meta itemprop=&quot;name&quot; content=&quot;Review Activity&quot;/&gt;&lt;/div&gt;&lt;/div&gt;&lt;table border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; style=&quot;padding-bottom: 20px; max-width: 516px; min-width: 220px;&quot;&gt;&lt;tr&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;div style=&quot;border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 40px 20px;&quot; align=&quot;center&quot; class=&quot;mdv2rw&quot;&gt;&lt;img src=&quot;https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png&quot; width=&quot;74&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; style=&quot;margin-bottom: 16px;&quot; alt=&quot;Google&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;&quot;&gt;&lt;div style=&quot;font-size: 24px;&quot;&gt;You allowed AIMail access to some of your Google Account data &lt;/div&gt;&lt;table align=&quot;center&quot; style=&quot;margin-top:8px;&quot;&gt;&lt;tr style=&quot;line-height: normal;&quot;&gt;&lt;td align=&quot;right&quot; style=&quot;padding-right:8px;&quot;&gt;&lt;img [Redacted]&quot; height=&quot;20&quot; style=&quot;width: 20px; height: 20px; vertical-align: sub; border-radius: 50%;;&quot; src=&quot;https://lh3.googleusercontent.com/a/ACg8ocJzuzsuJs5PS8XzfTNuGZTxsvRW4DjWbD0HRpZ_uvXS_A5huQ=s96-c&quot; alt=&quot;&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.87); font-size: 14px; line-height: 20px;&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; &lt;/div&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; font-weight: 400; font-size: 14px; color: #1f1f1f; line-height: 20px;padding-top: 20px; text-align: left;&quot;&gt;&lt;br&gt;&lt;p&gt;If you didn&#x27;t allow AIMail access to some of your Google Account data, someone else may be trying to access your Google Account data.&lt;/p&gt;&lt;p&gt;Take a moment now to check your account activity and secure your account.&lt;/p&gt;&lt;div style=&quot;padding-top: 32px; text-align: center;&quot;&gt;&lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/alert/nt/[Redacted]?rfn%3D127%26rfnc%3D1%26eid%3D7344774850493656668%26et%3D0&quot; target=&quot;_blank&quot; link-id=&quot;main-button-link&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif; line-height: 16px; color: #ffffff; font-weight: 500; text-decoration: none; font-size: 14px;display:inline-block;padding: 12px 24px;background-color: #0b57d0; border-radius: 9999px; min-width: 64px;&quot;&gt;Check activity&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 40px;&quot;&gt;&lt;div style=&quot;border-bottom: thin solid #dadce0; padding-bottom: 24px;&quot;&gt;To make changes at any time to the access that AIMail has to your data, go to your &lt;a href=&quot;https://accounts.google.com/AccountChooser?Email=[EMAIL_REDACTED]&amp;amp;continue=https://myaccount.google.com/connections/overview/AY6rrVEI5i54aAESWOWt0X1xVDNlMZrnk2sILYUIE06vTJRpGs37lrkriN0KiNinL0JXaEkQBEQ6BVj6gBC0rBEurs0?utm_source%3Dsec_alert%26utm_medium%3Demail_notification%26force_all%3Dtrue&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;Google Account&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 20px; font-size: 12px; line-height: 16px; color: #5f6368; letter-spacing: 0.3px; text-align: center&quot;&gt;You can also see security activity at&lt;br&gt;&lt;a href=&quot;https://myaccount.google.com/notifications&quot; style=&quot;text-decoration: none; color: #4285F4;&quot; target=&quot;_blank&quot;&gt;https://myaccount.google.com/notifications&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;&lt;div&gt;You received this email to let you know about important changes to your Google Account and services.&lt;/div&gt;&lt;div style=&quot;direction: ltr;&quot;&gt;&amp;copy; 2026 Google LLC, &lt;a class=&quot;afal&quot; style=&quot;font-family: &amp;#39;Google Sans Flex&amp;#39;,&amp;#39;Google Sans Text&amp;#39;,&amp;#39;Google Sans&amp;#39;,&amp;#39;Noto Sans&amp;#39;,Arial,[Redacted],sans-serif;color: rgba(0,0,0,0.54); font-size: 11px; line-height: 18px; padding-top: 12px; text-align: center;&quot;&gt;1600 [Redacted], CA 94043, USA&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;td width=&quot;8&quot; style=&quot;width: 8px;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr height=&quot;32&quot; style=&quot;height: 32px;&quot;&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: Re: Security Alert: AIMail access to Google Account
 
 Hi Team,
 
@@ -443,7 +448,6 @@ Best regards,
 [Your Name]
 
 [Your Title]</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">17</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -491,10 +495,11 @@ Best regards,
     <legend><span class="num">22</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_1" placeholder="Optional">
   </fieldset>
-  <div class="draft">
-    <h3>Reply 2 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">Hi,
+</div>
+<div class="block">
+  <h3 class="blockhead">Reply 2 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">Hi,
 
 We&#x27;re onboarding a new supplier for the [Redacted] hardware refresh and need your sign-off before Friday.
 
@@ -507,8 +512,8 @@ Let me know if you need anything else before I submit it.
 Thanks,
 
 [Redacted] Lead</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: RE: Supplier Onboarding &amp; PO Sign-off for Hardware Refresh
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: RE: Supplier Onboarding &amp; PO Sign-off for Hardware Refresh
 
 Hi [Redacted],
 
@@ -523,7 +528,6 @@ Best regards,
 [Your Name]
 
 [Your Title]</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">23</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -571,12 +575,13 @@ Best regards,
     <legend><span class="num">28</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_2" placeholder="Optional">
   </fieldset>
-  <div class="draft">
-    <h3>Reply 3 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">&lt;div dir=&quot;auto&quot;&gt;Hi Mark,&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Thanks for the update on the most recent project. I&amp;#39;ll review the slides shortly. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Regarding the cost numbers, I&amp;#39;m still waiting on [Redacted] to send them over but I will make sure to get then to you as soon as I can. Also would it be possible to meet on Thursday instead of Friday at around 3:00 PM? Let me know if that works for you. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Looking forward to it. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Best regards,&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Natasha&lt;/div&gt;&lt;/div&gt;</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: Re: Project Update &amp; Meeting Time
+</div>
+<div class="block">
+  <h3 class="blockhead">Reply 3 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">&lt;div dir=&quot;auto&quot;&gt;Hi Mark,&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Thanks for the update on the most recent project. I&amp;#39;ll review the slides shortly. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Regarding the cost numbers, I&amp;#39;m still waiting on [Redacted] to send them over but I will make sure to get then to you as soon as I can. Also would it be possible to meet on Thursday instead of Friday at around 3:00 PM? Let me know if that works for you. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Looking forward to it. &lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Best regards,&lt;/div&gt;&lt;div dir=&quot;auto&quot;&gt;Natasha&lt;/div&gt;&lt;/div&gt;</pre>
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: Re: Project Update &amp; Meeting Time
 
 Hi Natasha,
 
@@ -587,7 +592,6 @@ Thursday at 3:00 PM works for me for our meeting. I&#x27;ll send over a calendar
 Best regards,
 
 Mark</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">29</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -635,12 +639,13 @@ Mark</pre>
     <legend><span class="num">34</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_3" placeholder="Optional">
   </fieldset>
-  <div class="draft">
-    <h3>Reply 4 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-rQesXe gmail-MPyX&quot; style=&quot;font-weight:700;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Subject:&lt;/span&gt; URGENT: Q3 Project Sync &amp;amp; Budget Approval Needed by Friday&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Hi there,&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I hope you are having a good week.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I need you to do a few things for us as soon as you can:&lt;/div&gt;&lt;/div&gt;&lt;ol class=&quot;gmail-IaGLZe gmail-VimKh&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Reschedule our team sync currently set for tomorrow at 2:00 PM to next Tuesday at 10:00 AM.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Review the attached (fictional) budget file and tell me if the total exceeds $15,000.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Draft a short, polite reply to Sarah letting her know we got her message about the design updates.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;/ol&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Let me know if you need anything else from me to get started.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Best,&lt;br style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Alex&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: Re: URGENT: Q3 Project Sync &amp; Budget Approval Needed by Friday
+</div>
+<div class="block">
+  <h3 class="blockhead">Reply 4 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">&lt;div dir=&quot;ltr&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-rQesXe gmail-MPyX&quot; style=&quot;font-weight:700;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Subject:&lt;/span&gt; URGENT: Q3 Project Sync &amp;amp; Budget Approval Needed by Friday&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Hi there,&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I hope you are having a good week.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;I need you to do a few things for us as soon as you can:&lt;/div&gt;&lt;/div&gt;&lt;ol class=&quot;gmail-IaGLZe gmail-VimKh&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Reschedule our team sync currently set for tomorrow at 2:00 PM to next Tuesday at 10:00 AM.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Review the attached (fictional) budget file and tell me if the total exceeds $15,000.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;li class=&quot;gmail-Z1qcYe&quot; style=&quot;margin:0px 0px 12px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;span class=&quot;gmail-iNqyIf&quot; style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Draft a short, polite reply to Sarah letting her know we got her message about the design updates.&lt;/span&gt;&lt;/li&gt;&lt;/div&gt;&lt;/ol&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Let me know if you need anything else from me to get started.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;gmail-&quot; style=&quot;font-family:&amp;quot;Google Sans&amp;quot;,Arial,sans-serif;font-size:16px;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;&lt;div class=&quot;gmail-n6owBd gmail-awi2gc&quot; style=&quot;margin:12px 0px 16px;border-bottom:0px rgb(230,232,240)&quot;&gt;Best,&lt;br style=&quot;margin:0px;border-bottom:0px rgb(230,232,240)&quot;&gt;Alex&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</pre>
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: Re: URGENT: Q3 Project Sync &amp; Budget Approval Needed by Friday
 
 Hi Alex,
 
@@ -657,7 +662,6 @@ Please let me know if you need anything else to get started.
 Best regards,
 
 [Your Name]</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">35</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -705,12 +709,13 @@ Best regards,
     <legend><span class="num">40</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_4" placeholder="Optional">
   </fieldset>
-  <div class="draft">
-    <h3>Reply 5 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is [Redacted] and I am writing from [Redacted], [Redacted] regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: [PHONE_REDACTED] / [PHONE_REDACTED] / [PHONE_REDACTED]&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc [Redacted] (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;[Redacted]&lt;br&gt;[Redacted] Lumpur&lt;/div&gt;</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: Re: Urgent Transfer Issue and Record Update - Sunway Logistics Sdn Bhd
+</div>
+<div class="block">
+  <h3 class="blockhead">Reply 5 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is [Redacted] and I am writing from [Redacted], [Redacted] regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: [PHONE_REDACTED] / [PHONE_REDACTED] / [PHONE_REDACTED]&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc [Redacted] (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;[Redacted]&lt;br&gt;[Redacted] Lumpur&lt;/div&gt;</pre>
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: Re: Urgent Transfer Issue and Record Update - Sunway Logistics Sdn Bhd
 
 Dear Support Team,
 
@@ -727,7 +732,6 @@ Best regards,
 Email Assistant
 
 Support Team</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">41</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -775,12 +779,13 @@ Support Team</pre>
     <legend><span class="num">46</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_5" placeholder="Optional">
   </fieldset>
-  <div class="draft">
-    <h3>Reply 6 of 6</h3>
-    <p class="label">The email that was received</p>
-    <pre class="email">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is Muhammad Danial and I am writing from Petaling Jaya, Selangor regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: &lt;a href=&quot;tel:+60%2012-345%206789&quot; value=&quot;[PHONE_REDACTED]&quot; target=&quot;_blank&quot;&gt;[PHONE_REDACTED]&lt;/a&gt; / [PHONE_REDACTED] /&lt;a href=&quot;tel:(713)%20853-6161&quot; value=&quot;+17138536161&quot; target=&quot;_blank&quot;&gt; [PHONE_REDACTED]&lt;/a&gt;&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot; target=&quot;_blank&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc 514012345678 (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;Muhammad Danial&lt;br&gt;Kuala Lumpur&lt;/div&gt;</pre>
-    <p class="label">The draft reply</p>
-    <pre class="email">Subject: Re: Update Request for Sunway Logistics Sdn Bhd Records / Maybank Transfer Issue
+</div>
+<div class="block">
+  <h3 class="blockhead">Reply 6 of 6</h3>
+  <p class="label">The email that was received</p>
+  <pre class="email received">&lt;div dir=&quot;ltr&quot;&gt;Dear Support Team,&lt;br&gt;&lt;br&gt;My name is Muhammad Danial and I am writing from Petaling Jaya, Selangor regarding an urgent transfer issue with Maybank.&lt;br&gt;&lt;br&gt;Please update the records for our organisation, Sunway Logistics Sdn Bhd. Here are my verified details:&lt;br&gt;- Malaysian IC: [IC_REDACTED] (Old format: [IC_REDACTED])&lt;br&gt;- Phone Numbers: &lt;a href=&quot;tel:+60%2012-345%206789&quot; value=&quot;[PHONE_REDACTED]&quot; target=&quot;_blank&quot;&gt;[PHONE_REDACTED]&lt;/a&gt; / [PHONE_REDACTED] /&lt;a href=&quot;tel:(713)%20853-6161&quot; value=&quot;+17138536161&quot; target=&quot;_blank&quot;&gt; [PHONE_REDACTED]&lt;/a&gt;&lt;br&gt;- Personal Email: &lt;a href=&quot;mailto:[EMAIL_REDACTED]&quot; target=&quot;_blank&quot;&gt;[EMAIL_REDACTED]&lt;/a&gt;&lt;br&gt;- Bank Account Reference: acc 514012345678 (Maybank savings)&lt;br&gt;&lt;br&gt;Please note that order tracking ID 998877665544 is not an IC number and should not be treated as one.&lt;br&gt;&lt;br&gt;Thank you,&lt;br&gt;Muhammad Danial&lt;br&gt;Kuala Lumpur&lt;/div&gt;</pre>
+  <p class="label">The reply our system drafted</p>
+  <pre class="email reply">Subject: Re: Update Request for Sunway Logistics Sdn Bhd Records / Maybank Transfer Issue
 
 Dear Muhammad Danial,
 
@@ -797,7 +802,6 @@ Best regards,
 Support Team
 
 HLIB</pre>
-  </div>
   <fieldset class="q">
     <legend><span class="num">47</span>Does the reply state anything that is not in the email above?</legend>
     <p class="hint">Made-up facts, dates, names, or promises that were never mentioned.</p>
@@ -845,6 +849,7 @@ HLIB</pre>
     <legend><span class="num">52</span>If not as written, what would you change?</legend>
     <input type="text" name="comment_6" placeholder="Optional">
   </fieldset>
+</div>
 </section>
 
 <section>
